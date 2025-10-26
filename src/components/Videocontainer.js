@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Youtube_api_key } from '../utils/constants';
-import Videocard from './Videocard';
+import Videocard, { Advideocard}  from './Videocard';
 import {Link} from "react-router-dom"
 const Videocontainer = () => {
   const [Videos,setVideos] = useState([])
@@ -21,7 +21,9 @@ const Videocontainer = () => {
   }
 
   return (
-    <div className='flex flex-wrap'>{ Videos.map((video) => <Link to={"/Watch?v=" + video.id}><Videocard key={video.id} info={video}/></Link>   )}</div>
+    <div className='flex flex-wrap'>
+      {Videos[4] &&<Advideocard info={Videos[4]}/>}
+      { Videos.map((video) => <Link to={"/Watch?v=" + video.id}><Videocard key={video.id} info={video}/></Link>   )}</div>
   )
 }
 
