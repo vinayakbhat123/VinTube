@@ -13,14 +13,18 @@ const Videocontainer = () => {
 
 
   useEffect(() => {
-    const getVideos = async () => {
+    getVideos();
+  }, []);
+  
+ const getVideos = async () => {
       try {
-        const response = await fetch(Youtube_api_key);
+        const response = await fetch("https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=IN&key="+Youtube_api_key);
         if (!response.ok) throw new Error("Fetch failed with status " + response.status);
         const json = await response.json();
 
-        const items = json.items || [];
+        const items = json?.items || [];
         // Dispatch both full list and filtered list initially
+        console.log(items)
         dispatch(addvideos(items));
         dispatch(filterVideos(items));
       } catch (error) {
@@ -28,12 +32,10 @@ const Videocontainer = () => {
       }
     };
 
-    getVideos();
-  }, [dispatch]);
 
   return (
     <div className='flex flex-wrap'>
-      {filteredVideos[4] && <Advideocard info={filteredVideos[4]} />}
+      {filteredVideos[0] && <Advideocard info={filteredVideos[4]} />}
       {filteredVideos.map((video) => {
         const videoId = video.id.videoId || video.id;
         return (
